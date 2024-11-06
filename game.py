@@ -2,8 +2,6 @@ import cv2
 from cvzone.HandTrackingModule import HandDetector
 from pynput.keyboard import Controller
 import math
-from time import sleep
-import pyautogui
 from keys import PressKey, W,A, D,S, Space, ReleaseKey
 
 #global xl1,xl2,yl1,yl2,xr1,xr2,yr1,yr2
@@ -12,8 +10,7 @@ currentKey = list()
 cap = cv2.VideoCapture(1)
 cap.set(3,1280)
 cap.set(4,720)
-'''cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
-cap.set(cv2.CAP_PROP_FPS, 60)'''
+
 
 keyboard=Controller()
 
@@ -58,10 +55,7 @@ while True:
 
         if len(hands)==2:
             hand2 = hands[1]
-            lmList2 = hand2["lmList"]  # List of 21 Landmarks points
-            # bbox1 = hand1["bbox"]  # Bounding Box info x,y,w,h
-            # centerPoint1 = hand1["center"]  # center of the hand cx,cy
-            # handType1 = hand1["type"]  # Hand Type Left or Right
+            lmList2 = hand2["lmList"]
             xl1 = lmList2[8][0]
             yl1 = lmList2[8][1]
             xl2 = lmList2[4][0]
@@ -70,19 +64,12 @@ while True:
 
             if (550 < xr1 < 750 and 100 < yr1 < 300 and dist1 < 35) or (550 < xl1 < 750 and 100 < yl1 < 300 and dist2 < 35) :
                 cv2.rectangle(img, (750, 300), (550, 100), (0, 255, 0),7)
-                #ReleaseKey(S)
                 PressKey(W)
                 key = True
                 currentKey.append(W)
-                #sleep(1)
-                #ReleaseKey(W)
-                #ReleaseKey(W)
-                #sleep(0.15)'''
 
             if (300 < xr1 < 500 and 350 < yr1 < 550 and dist1 < 35) or (300 < xl1 < 500 and 350 < yl1 < 550 and dist2 < 35) :
                 cv2.rectangle(img, (500, 550), (300, 350), (0, 255, 0),7)
-                #pyautogui.press('A')
-                #auto.press('W')
                 PressKey(A)
                 key = True
                 currentKey.append(A)
@@ -91,20 +78,17 @@ while True:
 
             if (550 < xr1 < 750 and 350 < yr1 < 550 and dist1 < 35) or (550 < xl1 < 750 and 350 < yl1 < 550 and dist2 < 35) :
                 cv2.rectangle(img, (750, 550), (550, 350), (0, 255, 0),7)
-                #pyautogui.press('S')
-                #auto.press('W')
                 PressKey(S)
                 key = True
                 currentKey.append(S)
 
             if (800 < xr1 < 1000 and 350 < yr1 < 550 and dist1 < 35) or (800 < xl1 < 1000 and 350 < yl1 < 550 and dist2 < 35) :
                 cv2.rectangle(img, (1000, 550), (800, 350), (0, 255, 0),7)
-                #pyautogui.press('D')
-                #auto.press('W')
+
                 PressKey(D)
                 key = True
                 currentKey.append(D)
-                #sleep(0.15)'''
+
 
             if not key and len(currentKey) != 0:
                 for current in currentKey:
